@@ -44,6 +44,18 @@ class Calendar extends React.Component {
     return <div className="days row">{days}</div>;
   }
 
+  nextMonth = () => {
+    this.setState({
+      currentMonth: dateFns.addMonths(this.state.currentMonth, 1)
+    });
+  };
+
+  prevMonth = () => {
+    this.setState({
+      currentMonth: dateFns.subMonths(this.state.currentMonth, 1)
+    });
+  };
+
   onDateClick = day => {
     this.setState({
       selectedDate: day
