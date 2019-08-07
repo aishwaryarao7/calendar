@@ -9,13 +9,6 @@ class Calendar extends Component {
     selectedDate: new Date()
   };
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if(this.state.selectedDate != nextState.selectedDate) {
-         return false
-    }
-    return true
-  }
-
   renderHeader() {
     const dateFormat = "MMMM YYYY";
 
@@ -80,6 +73,10 @@ class Calendar extends Component {
             }`}
             key={day}
             onClick={() => this.onDateClick(dateFns.parse(cloneDay))}
+            onDoubleClick={() => {
+              this.onDateClick(dateFns.parse(cloneDay));
+              this.simpleDialog.show();
+            }}
           >
             <span className="number">{formattedDate}</span>
             <span className="bg">{formattedDate}</span>
@@ -97,17 +94,18 @@ class Calendar extends Component {
     return <div className="body">{rows}</div>;
   }
 
-  renderEvents(events) {
-    const eventList = events.map((event) =>
+  renderEvents() {
+    const eventList = this.props.data.map((event) =>
       <li key={event.day}>
-        {event.day}
+        {`You have a reminder for ${event.date} on ${Object.keys(event)}`}
       </li>
     );
     return eventList;
   }
 
-  setReminder = (day, title, events) => {
-    events.push({ day: title });
+  setReminder = (title) => {
+    let date = this.state.selectedDate.toString();
+    this.props.data.push({ date: title });
   }
 
   nextMonth = () => {
@@ -126,7 +124,6 @@ class Calendar extends Component {
     this.setState({
       selectedDate: day
     });
-    this.simpleDialog.show()
   };
 
   closeModal = () => {
@@ -134,20 +131,18 @@ class Calendar extends Component {
   }
 
   render() {
-    const events = [];
     return (
       <div className="calendar">
         {this.renderHeader()}
         {this.renderDays()}
         {this.renderCells()}
         <ul>
-          {this.renderEvents(events)}
+          {this.renderEvents()}
         </ul>
         <SkyLight ref={ref => this.simpleDialog = ref}>
           <Reminder
             day={this.state.selectedDate}
             setReminder={this.setReminder}
-            events={events}
           />
         </SkyLight>
       </div>

@@ -6,10 +6,12 @@ import "./App.css";
 
 class App extends React.Component {
   render() {
+    const dayOfTheMonth = [];
+    {console.log(dayOfTheMonth);}
     return (
       <div className="App">
         <main>
-          <Calendar />
+          <Calendar data={dayOfTheMonth} />
         </main>
       </div>
     );

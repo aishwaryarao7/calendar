@@ -14,8 +14,7 @@ class Reminder extends Component {
   }
 
   handleSubmit(event) {
-    this.props.setReminder(this.props.day, this.state.value, this.props.events);
-    alert(`You've set a reminder on ${this.props.day} for ${this.state.value}`)
+    this.props.setReminder(this.state.value);
     event.preventDefault();
   }
 
