@@ -109,6 +109,11 @@ class Calendar extends Component {
     });
   };
 
+  setReminder = (day, title) => {
+    console.log(day);
+    console.log(title);
+  }
+
   render() {
     return (
       <div className="calendar">
@@ -116,7 +121,7 @@ class Calendar extends Component {
         {this.renderDays()}
         {this.renderCells()}
         <SkyLight ref={ref => this.simpleDialog = ref}>
-          <Reminder />
+          <Reminder day={this.state.selectedDate} setReminder={this.setReminder} />
         </SkyLight>
       </div>
     );
