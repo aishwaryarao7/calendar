@@ -1,7 +1,9 @@
-import React from "react";
+import React, { Component } from "react";
 import dateFns from "date-fns";
+import SkyLight from 'react-skylight';
+import Reminder from './Reminder';
 
-class Calendar extends React.Component {
+class Calendar extends Component {
   state = {
     currentMonth: new Date(),
     selectedDate: new Date()
@@ -71,6 +73,7 @@ class Calendar extends React.Component {
             }`}
             key={day}
             onClick={() => this.onDateClick(dateFns.parse(cloneDay))}
+            onDoubleClick={() => this.simpleDialog.show()}
           >
             <span className="number">{formattedDate}</span>
             <span className="bg">{formattedDate}</span>
@@ -112,6 +115,9 @@ class Calendar extends React.Component {
         {this.renderHeader()}
         {this.renderDays()}
         {this.renderCells()}
+        <SkyLight ref={ref => this.simpleDialog = ref}>
+          <Reminder />
+        </SkyLight>
       </div>
     );
   }
